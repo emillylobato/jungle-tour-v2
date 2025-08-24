@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "dev": "concurrently \"npm --prefix apps/backend run dev\" \"npm --prefix apps/frontend run dev\""
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1"
+  }
+}
