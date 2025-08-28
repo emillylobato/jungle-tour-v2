@@ -1,30 +1,48 @@
-import { useState } from 'react'
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import PrivateRoute from "./components/PrivateRoute";
+
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import ClientePage from "./pages/ClientePage";
+import FornecedorPage from "./pages/FornecedorPage";
+import EstabelecimentosPage from "./pages/EstabelecimentosPage";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          {/* Removido o logo do Vite */}
-        </a>
-        <a href="https://react.dev" target="_blank">
-          {/* Removido o logo do React */}
-        </a>
-      </div>
-      <h1>Jungle Tour - Sistema de Turismo</h1> {/* Mudei o título */}
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Comece a desenvolver sua aplicação Jungle Tour aqui!
-        </p>
-      </div>
-    </>
-  )
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* público */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+
+          {/* cliente */}
+          <Route
+            path="/cliente"
+            element={
+              <PrivateRoute roles={["cliente"]}>
+                <ClientePage />
+              </PrivateRoute>
+            }
+          />
+
+          {/* fornecedor */}
+          <Route
+            path="/fornecedor"
+            element={
+              <PrivateRoute roles={["fornecedor"]}>
+                <FornecedorPage />
+              </PrivateRoute>
+            }
+          />
+
+          {/* público */}
+          <Route path="/" element={<EstabelecimentosPage />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
