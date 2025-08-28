@@ -12,6 +12,10 @@ router.get("/", (req, res) => {
   });
 });
 
+router.get("/health", (req, res) => {
+  res.json({ status: "OK", message: "API está funcionando!" });
+});
+
 //nova rota para testar o BD
 router.get("/db-test", async (req, res) => {
   try {
