@@ -1,48 +1,26 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
-import PrivateRoute from "./components/PrivateRoute";
-
-import LoginPage from "./pages/LoginPage";
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import LoginModal from "./components/LoginModal";
+import Home from "./pages/Home";
 import RegisterPage from "./pages/RegisterPage";
-import ClientePage from "./pages/ClientePage";
-import FornecedorPage from "./pages/FornecedorPage";
-import EstabelecimentosPage from "./pages/EstabelecimentosPage";
+import BookingPage from "./pages/BookingPage";
 
-function App() {
+export default function App() {
+  const [loginOpen, setLoginOpen] = useState(false);
+
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* público */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-
-          {/* cliente */}
-          <Route
-            path="/cliente"
-            element={
-              <PrivateRoute roles={["cliente"]}>
-                <ClientePage />
-              </PrivateRoute>
-            }
-          />
-
-          {/* fornecedor */}
-          <Route
-            path="/fornecedor"
-            element={
-              <PrivateRoute roles={["fornecedor"]}>
-                <FornecedorPage />
-              </PrivateRoute>
-            }
-          />
-
-          {/* público */}
-          <Route path="/" element={<EstabelecimentosPage />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <>
+      <Navbar onLoginClick={() => setLoginOpen(true)} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/booking" element={<BookingPage />} />
+        {/* crie outras páginas depois: /passeios, /sobre, /contato */}
+      </Routes>
+      <Footer />
+      <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
+    </>
   );
 }
-
-export default App;
