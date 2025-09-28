@@ -3,6 +3,18 @@ import { getEstabelecimentos } from '../services/estabelecimentoService';
 import { getCombos } from '../services/comboService';
 import { createComentario } from '../services/comentarioService';
 
+import api from "../services/api";
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await api.post("/auth/login", { email, password });
+    console.log("Login OK:", response.data);
+  } catch (err) {
+    console.error("Erro no login:", err.response?.data || err.message);
+  }
+};
+
 const ClientePage = () => {
   const [estabelecimentos, setEstabelecimentos] = useState([]);
   const [combos, setCombos] = useState([]);

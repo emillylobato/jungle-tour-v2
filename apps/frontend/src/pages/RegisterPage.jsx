@@ -2,6 +2,18 @@ import { useState } from 'react';
 import { register } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 
+import api from "../services/api";
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await api.post("/auth/login", { email, password });
+    console.log("Login OK:", response.data);
+  } catch (err) {
+    console.error("Erro no login:", err.response?.data || err.message);
+  }
+};
+
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
     nome: '',

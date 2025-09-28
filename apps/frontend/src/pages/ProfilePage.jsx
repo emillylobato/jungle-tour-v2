@@ -2,6 +2,18 @@ import { useEffect, useState } from 'react';
 import { getProfile } from '../services/authService';
 import { updateUsuario } from '../services/usuarioService';
 
+import api from "../services/api";
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await api.post("/auth/login", { email, password });
+    console.log("Login OK:", response.data);
+  } catch (err) {
+    console.error("Erro no login:", err.response?.data || err.message);
+  }
+};
+
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

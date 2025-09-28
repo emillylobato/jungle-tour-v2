@@ -6,6 +6,18 @@ import CachoeiraImg from '../assets/c.png';
 import MusaImg from '../assets/MUSA.png';
 import TambaquiImg from '../assets/tambaqui.png';
 
+import api from "../services/api";
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await api.post("/auth/login", { email, password });
+    console.log("Login OK:", response.data);
+  } catch (err) {
+    console.error("Erro no login:", err.response?.data || err.message);
+  }
+};
+
 export default function Home() {
     return (
       <>

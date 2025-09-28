@@ -2,6 +2,18 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
+import api from "../services/api";
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await api.post("/auth/login", { email, password });
+    console.log("Login OK:", response.data);
+  } catch (err) {
+    console.error("Erro no login:", err.response?.data || err.message);
+  }
+};
+
 function LoginPage() {
   const { handleLogin } = useContext(AuthContext);
   const [email, setEmail] = useState("");
